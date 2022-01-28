@@ -1,0 +1,9 @@
+services:
+  web:
+    extends:
+      file: docker-compose.yml
+      service: web
+    ports:
+      - 5000:5000
+    env_file:
+      - ./services/web/.env.dev

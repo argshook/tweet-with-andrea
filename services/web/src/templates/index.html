@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<head>
+  <title>Tweet with Andrea</title>
+  <link
+    rel="shortcut icon"
+    href="{{ url_for('static', filename='andrea.png') }}"
+  />
+  <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
+</head>
+
+<body>
+  <header style="display: flex; align-items: center; gap: 1rem;">
+    <div>
+      <img src="{{ url_for('static', filename='andrea.png') }}" alt="Tweet with Andrea" width="96" height="128" style="" />
+    </div>
+    <hgroup>
+      <h1>Tweet with Andrea</h1>
+      <h2>Your local @questdb guide</h2>
+    </hgroup>
+  </header>
+
+  <main>
+    <section>
+      <form action="/" method="post">
+        <label for="prompt">What topics would you like to tweet about?</label>
+        <textarea
+          rows="8"
+          cols="50"
+          name="prompt"
+          placeholder="Works best with format like this:
+
+- QuestDB is a fast SQL database for time series
+- community is awesome
+- we are hiring"
+          required
+        >{{ prompt }}</textarea>
+
+        <input type="submit" value="Make a tweet!" />
+      </form>
+    </section>
+
+    {% if history %}
+    <section>
+      <h2>Ideas</h2>
+
+      {% for (timestamp, model, prompt, result) in history %}
+      <article>
+        <header>
+          Crafted at <code>{{timestamp}}</code>
+        </header>
+        <p style="white-space: pre-wrap">{{result}}</p>
+        <footer>
+          <details style="border: 0; margin-bottom: 0; padding-bottom: 0">
+            <summary>Prompt</summary>
+            <code style="white-space: pre-wrap">{{prompt}}</code>
+          </details>
+        </footer>
+      </article>
+      {% endfor %}
+    </section>
+    {% endif %}
+  </main>
+</body>
